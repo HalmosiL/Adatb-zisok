@@ -32,6 +32,20 @@ function deleteByID(id) {
     }
 }
 
+function updateElement(id, type, name, difficulty, coach) {
+    for(var i=0; i<Sports.length; i++) {
+        if(Sports[i].id == id){
+            Sports[i] = {
+                id: id,
+                type: type,
+                name: name,
+                difficulty: difficulty,
+                coach: coach
+            }
+        }
+    }
+}
+
 function addElement(type, name, difficulty, coach) {
     Sports.push({
         id: Sports.length + 1,
@@ -42,4 +56,54 @@ function addElement(type, name, difficulty, coach) {
     })
 }
 
-module.exports = {getAllSports, deleteByID, addElement}
+function getSportsByType(type) {
+    SportsL = []
+
+    for(var i = 0; i < Sports.length; i++) {
+        if(Sports[i].type == type) {
+            SportsL.push(Sports[i])
+        }
+    }
+
+    return SportsL
+}
+
+function getSportsByName(name){
+    SportsL = []
+
+    for(var i = 0; i < Sports.length; i++) {
+        if(Sports[i].name == name) {
+            SportsL.push(Sports[i])
+        }
+    }
+
+    return SportsL
+}
+
+function getSportsByDificulty(difficulty) {
+    SportsL = []
+
+    for(var i = 0; i < Sports.length; i++) {
+        if(Sports[i].difficulty == difficulty) {
+            SportsL.push(Sports[i])
+        }
+    }
+
+    return SportsL
+}
+
+function getSportsByCoach(coach) {
+    console.log(coach)
+    SportsL = []
+
+    for(var i = 0; i < Sports.length; i++) {
+        if(Sports[i].coach == coach) {
+            SportsL.push(Sports[i])
+        }
+    }
+
+    return SportsL
+}
+
+
+module.exports = {getAllSports, deleteByID, addElement, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach, updateElement}

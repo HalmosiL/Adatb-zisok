@@ -21,8 +21,12 @@ app.use(session({secret: "Your secret key"}));
 //routers
 const autRouter = require("./routers/authRouter.js")
 const sportsRouter = require("./routers/sportsRouter.js")
+const coachRouter = require("./routers/coachRouter.js")
+const sportmanRouter = require("./routers/sportmanRouter.js")
 
 app.use('/', autRouter);
 app.use('/sports/', sportsRouter);
+app.use('/coachlist/', coachRouter);
+app.use('/sportman/', sportmanRouter);
 
 app.listen(3000);

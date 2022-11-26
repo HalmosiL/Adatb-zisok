@@ -14,7 +14,16 @@
 
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
-          <a class="navbar-brand" href="/">Edzők</a>
+          <a class="navbar-brand" href="/coachlist">Edzők</a>
+        </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/sportman">Sportolók</a>
+        </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/sportman">Edzők Értékelése</a>
+        </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/sportman">Keresés</a>
         </li>
       </ul>
 
@@ -45,9 +54,12 @@
           <td><%= sports[i].difficulty%></td> 
           <td><%= sports[i].coach%></td>
 
-          <form action="/sports/delete" method="POST">
-            <td><button type="button" class="btn btn-primary">Primary</button></td>
-          </form>
+          <td>
+            <form action="/sports/update" method="POST">
+              <input type="hidden" id="id" name="id" value=<%= sports[i].id%>
+              <td><button type="submit" class="btn btn-primary">Módósítás</button></td>
+            </form>
+          </td>
 
           <td>
             <form action="/sports/delete" method="POST">
@@ -69,7 +81,7 @@
         <div class="form-group">
           <label for="formGroupExampleInput" style="max-width: 50%;"> Típus</label>
           <select name="type" id="type" required>
-            <option value="Labda">Labda</option>
+            <option value="Labda" selected>Labda</option>
             <option value="Küzdő sport">Küzdő sport</option>
             <option value="Vízi sport">Vízi sport</option>
             <option value="Motor sport">Motor sport</option>
@@ -78,23 +90,22 @@
         <div class="form-group">
           <label for="formGroupExampleInput" style="max-width: 50%;"> Nehézség</label>
           <select name="difficulty" id="difficulty" required>
-            <option value="Labda">Könnyű</option>
-            <option value="Küzdő sport">Közepes</option>
-            <option value="Vízi sport">Nehéz</option>
-            <option value="Motor sport">Extrém</option>
+            <option value="Könnyű" selected>Könnyű</option>
+            <option value="Közepes">Közepes</option>
+            <option value="Nehéz">Nehéz</option>
+            <option value="Extrém">Extrém</option>
           </select>
         </div>
         <div class="form-group">
           <label for="formGroupExampleInput2" style="max-width: 50%;"> Név</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Another input" style="max-width: 50%;" required>
+          <input type="text" class="form-control" name="name" id="name" style="max-width: 50%;" required>
         </div>
         <div class="form-group">
           <label for="formGroupExampleInput2" style="max-width: 50%;"> Edző</label>
           <select name="coach" id="coach" required>
-            <option value="Labda">Könnyű</option>
-            <option value="Küzdő sport">Közepes</option>
-            <option value="Vízi sport">Nehéz</option>
-            <option value="Motor sport">Extrém</option>
+            <% for(var i=0; i<coach.length; i++) {%>
+              <option value=<%= coach[i].name%> selected><%= coach[i].name%></option>
+            <% } %>
           </select>
         </div>
 
@@ -109,11 +120,11 @@
       <div style="max-width: 25%;border: 1px solid black;">
         <h2>Szűrés</h2>
 
-        <form>
+        <form action="/type" method="POST">
           <div class="form-group">
             <label for="formGroupExampleInput" style="max-width: 50%;"> Típus</label>
-            <select name="cars" id="cars">
-              <option value="Labda">Labda</option>
+            <select name="type" id="type">
+              <option value="Labda" selected>Labda</option>
               <option value="Küzdő sport">Küzdő sport</option>
               <option value="Vízi sport">Vízi sport</option>
               <option value="Motor sport">Motor sport</option>
@@ -121,51 +132,49 @@
           </div>
 
           <div class="form-group">
-            <td><button type="button" class="btn btn-success">Szűrés</button></td>
-            </select>
+            <td><button type="submit" class="btn btn-success">Szűrés</button></td>
           </div>
         </form>
 
-        <form>
+        <form action="/difficulty" method="POST">
           <div class="form-group">
             <label for="formGroupExampleInput" style="max-width: 50%;"> Nehézség</label>
-            <select name="cars" id="cars">
-              <option value="Labda">Könnyű</option>
-              <option value="Küzdő sport">Közepes</option>
-              <option value="Vízi sport">Nehéz</option>
-              <option value="Motor sport">Extrém</option>
+            <select name="difficulty" id="difficulty">
+              <option value="Könnyű" selected>Könnyű</option>
+              <option value="Közepes">Közepes</option>
+              <option value="Nehéz">Nehéz</option>
+              <option value="Extrém">Extrém</option>
             </select>
           </div>
           <div class="form-group">
-            <td><button type="button" class="btn btn-success">Szűrés</button></td>
-            </select>
-          </div>
-        </form>
-
-        <form>
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Név</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input" style="max-width: 50%;">
-          </div>
-          <div class="form-group">
-            <td><button type="button" class="btn btn-success">Szűrés</button></td>
+            <td><button type="submit" class="btn btn-success">Szűrés</button></td>
             </select>
           </div>
         </form>
 
-        <form>
+        <form action="/name" method="POST">
+          <div class="form-group">
+            <label for="formGroupExampleInput2" style="max-width: 50%;">Név</label>
+            <input type="text" name="name" id="id" class="form-control" style="max-width: 50%;">
+          </div>
+          <div class="form-group">
+            <td><button type="submit" class="btn btn-success">Szűrés</button></td>
+            </select>
+          </div>
+        </form>
+
+        <form action="/coach" method="POST">
           <div class="form-group">
             <label for="formGroupExampleInput2" style="max-width: 50%;"> Edző</label>
-            <select name="cars" id="cars">
-              <option value="Labda">Könnyű</option>
-              <option value="Küzdő sport">Közepes</option>
-              <option value="Vízi sport">Nehéz</option>
-              <option value="Motor sport">Extrém</option>
+            <select name="coach" id="coach">
+              <% for(var i=0; i<coach.length; i++) {%>
+                <option value=<%= coach[i].name%> selected><%= coach[i].name%></option>
+              <% } %>
             </select>
           </div>
 
           <div class="form-group">
-            <td><button type="button" class="btn btn-success">Szűrés</button></td>
+            <td><button type="submit" class="btn btn-success">Szűrés</button></td>
             </select>
           </div>
         </form>

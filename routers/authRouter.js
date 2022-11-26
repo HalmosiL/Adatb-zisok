@@ -1,5 +1,7 @@
 const express = require('express')
-const {getAllSports} = require('../services/sportService.js')
+const {getAllSports, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach} = require('../services/sportService.js')
+const {getAllCoaches} = require('../services/coachService.js')
+
 const {checkSignIn} = require('../auth.js')
 const {createUser, login, getUser} = require('../services/userService.js')
 
@@ -34,19 +36,39 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/', checkSignIn, (req, res) => {
-    res.render('index', {sports: getAllSports()})
+    res.render('index', {sports: getAllSports(), coach: getAllCoaches()})
+})
+
+router.get('/type', checkSignIn, (req, res) => {
+    res.redirect('/')
+})
+
+router.get('/coach', checkSignIn, (req, res) => {
+    res.redirect('/')
+})
+
+router.get('/name', checkSignIn, (req, res) => {
+    res.redirect('/')
+})
+
+router.get('/difficulty', checkSignIn, (req, res) => {
+    res.redirect('/')
 })
 
 router.post('/type', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsBy(req.body.type)})
+    res.render('index', {sports: getSportsByType(req.body.type), coach: getAllCoaches()})
+})
+
+router.post('/coach', checkSignIn, (req, res) => {
+    res.render('index', {sports: getSportsByCoach(req.body.coach), coach: getAllCoaches()})
 })
 
 router.post('/name', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByName(req.body.dificulty)})
+    res.render('index', {sports: getSportsByName(req.body.name), coach: getAllCoaches()})
 })
 
-router.post('/dificulty', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByDificulty(req.body.dificulty)})
+router.post('/difficulty', checkSignIn, (req, res) => {
+    res.render('index', {sports: getSportsByDificulty(req.body.difficulty), coach: getAllCoaches()})
 })
 
 router.get('/signup', (req, res) => {
