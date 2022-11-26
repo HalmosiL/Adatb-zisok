@@ -22,9 +22,6 @@
         <li class="nav-item active">
             <a class="navbar-brand" href="/sportman">Edzők Értékelése</a>
         </li>
-        <li class="nav-item active">
-            <a class="navbar-brand" href="/sportman">Keresés</a>
-        </li>
       </ul>
 
       <form class="form-inline" action="/logout">
@@ -47,8 +44,8 @@
         <tbody>
           <% for(var i=0; i<coach.length; i++) {%>
             <tr>
-              <td><%= coach[i].type%></td>
-              <td><%= coach[i].name%></td>   
+              <td><%= coach[i].sportType%></td>
+              <td><%= coach[i].coachName%></td>   
     
               <form action="/coachlist/update" method="POST">
                 <td><button type="submit" class="btn btn-primary">Módósítás</button></td>
@@ -56,7 +53,7 @@
     
               <td>
                 <form action="/coachlist/delete" method="POST">
-                  <input type="hidden" id="id" name="id" value=<%= coach[i].id%>>
+                  <input type="hidden" id="id" name="id" value=<%= coach[i].coachID%>>
                   <button type="submit" class="btn btn-danger">Törlés</button>
                 </form>
               </td>

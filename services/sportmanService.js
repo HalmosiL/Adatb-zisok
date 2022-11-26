@@ -1,16 +1,20 @@
-sportMan = [
-    {
-        id: 1,
-        name: "a",
-        age: "b",
-        height: "c",
-        height: "d",
-        sportBranch: "e"
-    }
-]
+const {pool} = require('../db')
 
-function getAllSportMan() {
-    return sportMan
+async function getAllSportMan() {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("SELECT * from SportsMan;")
+
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
+        }
+
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
 function addSportMan(name, age, height, weight, sportBranch) {

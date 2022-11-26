@@ -22,9 +22,6 @@
         <li class="nav-item active">
           <a class="navbar-brand" href="/sportman">Edzők Értékelése</a>
         </li>
-        <li class="nav-item active">
-          <a class="navbar-brand" href="/sportman">Keresés</a>
-        </li>
       </ul>
 
       <form class="form-inline" action="/logout">
@@ -49,8 +46,8 @@
     <tbody>
       <% for(var i=0; i<sports.length; i++) {%>
         <tr>
-          <td><%= sports[i].type%></td>
-          <td><%= sports[i].name%></td>   
+          <td><%= sports[i].type_ %></td>
+          <td><%= sports[i].name_ %></td>   
           <td><%= sports[i].difficulty%></td> 
           <td><%= sports[i].coach%></td>
 
@@ -60,7 +57,6 @@
               <td><button type="submit" class="btn btn-primary">Módósítás</button></td>
             </form>
           </td>
-
           <td>
             <form action="/sports/delete" method="POST">
               <input type="hidden" id="id" name="id" value=<%= sports[i].id%>>
@@ -104,7 +100,7 @@
           <label for="formGroupExampleInput2" style="max-width: 50%;"> Edző</label>
           <select name="coach" id="coach" required>
             <% for(var i=0; i<coach.length; i++) {%>
-              <option value=<%= coach[i].name%> selected><%= coach[i].name%></option>
+              <option value=<%= coach[i].coachID%> selected><%= coach[i].coachName%></option>
             <% } %>
           </select>
         </div>
@@ -168,7 +164,7 @@
             <label for="formGroupExampleInput2" style="max-width: 50%;"> Edző</label>
             <select name="coach" id="coach">
               <% for(var i=0; i<coach.length; i++) {%>
-                <option value=<%= coach[i].name%> selected><%= coach[i].name%></option>
+                <option value=<%= coach[i].coachID%> selected><%= coach[i].coachName%></option>
               <% } %>
             </select>
           </div>

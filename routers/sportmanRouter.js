@@ -5,8 +5,8 @@ const {getAllSportMan, addSportMan, deleteSportMan} = require('../services/sport
 
 const {checkSignIn} = require('../auth')
 
-router.get('/', checkSignIn, (req, res) => {
-    res.render('sportman', {sportMan: getAllSportMan()})
+router.get('/', checkSignIn, async (req, res) => {
+    res.render('sportman', {sportMan: await getAllSportMan()})
 })
 
 router.post('/add', checkSignIn, (req, res) => {

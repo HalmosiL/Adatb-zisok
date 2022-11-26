@@ -35,8 +35,8 @@ router.get('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-router.get('/', checkSignIn, (req, res) => {
-    res.render('index', {sports: getAllSports(), coach: getAllCoaches()})
+router.get('/', checkSignIn, async (req, res) => {
+    res.render('index', {sports: await getAllSports(), coach: await getAllCoaches()})
 })
 
 router.get('/type', checkSignIn, (req, res) => {
@@ -55,20 +55,20 @@ router.get('/difficulty', checkSignIn, (req, res) => {
     res.redirect('/')
 })
 
-router.post('/type', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByType(req.body.type), coach: getAllCoaches()})
+router.post('/type', checkSignIn, async (req, res) => {
+    res.render('index', {sports: await getSportsByType(req.body.type), coach: await getAllCoaches()})
 })
 
-router.post('/coach', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByCoach(req.body.coach), coach: getAllCoaches()})
+router.post('/coach', checkSignIn, async (req, res) => {
+    res.render('index', {sports: await getSportsByCoach(req.body.coach), coach: await getAllCoaches()})
 })
 
-router.post('/name', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByName(req.body.name), coach: getAllCoaches()})
+router.post('/name', checkSignIn, async (req, res) => {
+    res.render('index', {sports: await getSportsByName(req.body.name), coach: await getAllCoaches()})
 })
 
-router.post('/difficulty', checkSignIn, (req, res) => {
-    res.render('index', {sports: getSportsByDificulty(req.body.difficulty), coach: getAllCoaches()})
+router.post('/difficulty', checkSignIn, async (req, res) => {
+    res.render('index', {sports: await getSportsByDificulty(req.body.difficulty), coach: await getAllCoaches()})
 })
 
 router.get('/signup', (req, res) => {

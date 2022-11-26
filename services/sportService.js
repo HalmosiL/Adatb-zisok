@@ -1,34 +1,31 @@
-Sports = [
-    {
-        id:1,
-        type: "1labda",
-        name:"labda",
-        difficulty:"labda",
-        coach:"labda"
-    },
-    {
-        id:2,
-        type: "2labda",
-        name:"labda",
-        difficulty:"labda",
-        coach:"labda"
-    },
-    {
-        id:3,
-        type: "3labda",
-        name:"labda",
-        difficulty:"labda",
-        coach:"labda"
-    }
-]
+const {pool} = require('../db')
 
-function getAllSports() {
-    return Sports
+async function getAllSports() {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("SELECT ID as id, type_, name_, difficulty, coachName as coach FROM Sports INNER JOIN Coach ON Sports.coachID = Coach.coachID;")
+
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
+        }
+
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
-function deleteByID(id) {
-    for(var i=0; i<Sports.length; i++) {
-        if(Sports[i].id == id) Sports.splice(i, 1)
+async function deleteByID(id) {
+    try {
+        conn = await pool.getConnection();
+        console.log(id)
+        await conn.query("DELETE FROM Sports WHERE ID = ?;", [id])
+
+        conn.destroy()
+    } catch (err) {
+        throw err
     }
 }
 
@@ -46,63 +43,103 @@ function updateElement(id, type, name, difficulty, coach) {
     }
 }
 
-function addElement(type, name, difficulty, coach) {
-    Sports.push({
-        id: Sports.length + 1,
-        type: type,
-        name: name,
-        difficulty: difficulty,
-        coach: coach
-    })
+async function addElement(type, name, difficulty, coach_id) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("INSERT INTO Sports (type_, name_, difficulty, coachID) VALUES (?,?,?,?);",
+            [
+                type,
+                name,
+                difficulty,
+                coach_id
+            ]
+        )
+        conn.destroy()
+    } catch (err) {
+        throw err
+    }
 }
 
-function getSportsByType(type) {
-    SportsL = []
+async function getSportsByType(type) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query(
+            "SELECT ID as id, type_, name_, difficulty, coachName as coach FROM Sports INNER JOIN Coach ON Sports.coachID = Coach.coachID And Sports.type_ = ?;",
+            [type]
+        )
 
-    for(var i = 0; i < Sports.length; i++) {
-        if(Sports[i].type == type) {
-            SportsL.push(Sports[i])
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
         }
-    }
 
-    return SportsL
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
-function getSportsByName(name){
-    SportsL = []
+async function getSportsByName(name){
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query(
+            "SELECT ID as id, type_, name_, difficulty, coachName as coach FROM Sports INNER JOIN Coach ON Sports.coachID = Coach.coachID And Sports.name_ like ?;",
+            ["%" + name + "%"]
+        )
 
-    for(var i = 0; i < Sports.length; i++) {
-        if(Sports[i].name == name) {
-            SportsL.push(Sports[i])
+        console.log(data)
+
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
         }
-    }
 
-    return SportsL
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
-function getSportsByDificulty(difficulty) {
-    SportsL = []
+async function getSportsByDificulty(difficulty) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query(
+            "SELECT ID as id, type_, name_, difficulty, coachName as coach FROM Sports INNER JOIN Coach ON Sports.coachID = Coach.coachID And Sports.difficulty = ?;",
+            [difficulty]
+        )
 
-    for(var i = 0; i < Sports.length; i++) {
-        if(Sports[i].difficulty == difficulty) {
-            SportsL.push(Sports[i])
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
         }
-    }
 
-    return SportsL
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
-function getSportsByCoach(coach) {
-    console.log(coach)
-    SportsL = []
+async function getSportsByCoach(coachID) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query(
+            "SELECT ID as id, type_, name_, difficulty, coachName as coach FROM Sports INNER JOIN Coach ON Sports.coachID = Coach.coachID And Sports.coachID = ?;",
+            [coachID]
+        )
 
-    for(var i = 0; i < Sports.length; i++) {
-        if(Sports[i].coach == coach) {
-            SportsL.push(Sports[i])
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
         }
-    }
 
-    return SportsL
+        return data
+    } catch (err) {
+        throw err
+    }
 }
 
 

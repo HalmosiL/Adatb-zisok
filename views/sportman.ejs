@@ -22,9 +22,6 @@
         <li class="nav-item active">
             <a class="navbar-brand" href="/sportman">Edzők Értékelése</a>
         </li>
-        <li class="nav-item active">
-            <a class="navbar-brand" href="/sportman">Keresés</a>
-        </li>
       </ul>
 
       <form class="form-inline" action="/logout">
@@ -49,15 +46,15 @@
         <tbody>
             <% for(var i=0; i<sportMan.length; i++) {%>
                 <tr>
-                    <td><%= sportMan[i].name%></td>
+                    <td><%= sportMan[i].name_ %></td>
                     <td><%= sportMan[i].age%></td>   
-                    <td><%= sportMan[i].height%></td> 
-                    <td><%= sportMan[i].weight%></td>
-                    <td><%= sportMan[i].sportBranch%></td>
+                    <td><%= sportMan[i].height %></td> 
+                    <td><%= sportMan[i].weight_ %></td>
+                    <td><%= sportMan[i].type_ %></td>
         
                     <td>
                     <form action="/sportman/delete" method="POST">
-                        <input type="hidden" id="id" name="id" value=<%= sportMan[i].id%>>
+                        <input type="hidden" id="id" name="id" value=<%= sportMan[i].ID%>>
                         <button type="submit" class="btn btn-danger">Törlés</button>
                     </form>
                     </td>
