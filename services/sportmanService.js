@@ -3,7 +3,8 @@ const {pool} = require('../db')
 async function getAllSportMan() {
     try {
         conn = await pool.getConnection();
-        data = await conn.query("SELECT * from SportsMan;")
+        data = await conn.query(
+            "SELECT SportsMan.ID, SportsMan.sportManName, SportsMan.age, SportsMan.height, SportsMan.weight_, Sports.name_ from SportsMan INNER JOIN Sports ON SportsMan.type_ = Sports.ID;")
 
         conn.destroy()
 
@@ -13,26 +14,37 @@ async function getAllSportMan() {
 
         return data
     } catch (err) {
-        throw err
     }
 }
 
-function addSportMan(name, age, height, weight, sportBranch) {
-    sportMan.push({
-        id: sportMan.length + 1,
-        name: name,
-        age: age,
-        height: height,
-        weight: weight,
-        sportBranch: sportBranch
-    })
+async function addSportMan(sportManName, age, height, weight, type) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("INSERT INTO SportsMan (sportManName, age, height, weight_, type_) VALUES (?,?,?,?,?);",
+            [
+                sportManName,
+                age,
+                height,
+                weight,
+                type
+            ]
+        )
+        conn.destroy()
+    } catch (err) {
+         
+    }
 }
 
-function deleteSportMan(id) {
-    for(var i = 0; i < sportMan.length; i++) {
-        if(sportMan[i].id == id) {
-            sportMan.splice(i, 1)
-        }
+async function deleteSportMan(id) {
+    console.log('ID', id)
+    try {
+        conn = await pool.getConnection();
+        console.log(id)
+        await conn.query("DELETE FROM SportsMan WHERE ID = ?;", [id])
+
+        conn.destroy()
+    } catch (err) {
+         
     }
 }
 

@@ -16,6 +16,12 @@
         <li class="nav-item active">
           <a class="navbar-brand" href="/coachlist">Edzők</a>
         </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/sportman">Sportolók</a>
+        </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/comments">Edzők Értékelése</a>
+        </li>
       </ul>
 
       <form class="form-inline" action="/logout">
@@ -29,7 +35,7 @@
     <div style="padding:50px 0% 0% 40%;">
         <div class="leftside">
           <form action="/coachlist/updateValue" method="POST">
-            <input type="hidden" id="id" name="id" value=<%= id%>>
+            <input type="hidden" id="id" name="id" value=<%= id %>>
             <h2>Módósítás</h2>
             <div class="form-group">
               <label for="formGroupExampleInput"> Típus</label>

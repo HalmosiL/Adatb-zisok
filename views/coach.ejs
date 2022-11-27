@@ -20,7 +20,7 @@
           <a class="navbar-brand" href="/sportman">Sportolók</a>
         </li>
         <li class="nav-item active">
-            <a class="navbar-brand" href="/sportman">Edzők Értékelése</a>
+            <a class="navbar-brand" href="/comments">Edzők Értékelése</a>
         </li>
       </ul>
 
@@ -32,13 +32,49 @@
 
 </head>
 <body>
+  <h2>Edzők Összes</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Tipus</th>
+        <th scope="col">Név</th>
+        <th scope="col">Módósítás</th>
+        <th scope="col">Törlés</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0; i<coachV.length; i++) {%>
+        <tr>
+          <td><%= coachV[i].sportType%></td>
+          <td><%= coachV[i].coachName%></td>   
+
+          <form action="/coachlist/update" method="POST">
+            <input type="hidden" id="id" name="id" value=<%= coachV[i].coachID%>>
+            <td><button type="submit" class="btn btn-primary">Módósítás</button></td>
+          </form>
+
+          <td>
+            <form action="/coachlist/delete" method="POST">
+              <input type="hidden" id="id" name="id" value=<%= coachV[i].coachID%>>
+              <button type="submit" class="btn btn-danger">Törlés</button>
+            </form>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+  <h2>Edzők Véleményezéssel</h2>
     <table class="table">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Tipus</th>
             <th scope="col">Név</th>
-            <th scope="col">Módósítás</th>
-            <th scope="col">Törlés</th>
+            <th scope="col">Átlagos Pontszám</th>
+            <th scope="col">Legjobb Értékelés</th>
+            <th scope="col">Legroszabb Értékelés</th>
           </tr>
         </thead>
         <tbody>
@@ -46,17 +82,11 @@
             <tr>
               <td><%= coach[i].sportType%></td>
               <td><%= coach[i].coachName%></td>   
+
+              <th scope="col"><%= coach[i].AVG%></th>
+              <th scope="col"><%= coach[i].MAX%></th>
+              <th scope="col"><%= coach[i].MIN%></th>
     
-              <form action="/coachlist/update" method="POST">
-                <td><button type="submit" class="btn btn-primary">Módósítás</button></td>
-              </form>
-    
-              <td>
-                <form action="/coachlist/delete" method="POST">
-                  <input type="hidden" id="id" name="id" value=<%= coach[i].coachID%>>
-                  <button type="submit" class="btn btn-danger">Törlés</button>
-                </form>
-              </td>
             </tr>
           <% } %>
         </tbody>

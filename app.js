@@ -26,10 +26,12 @@ const autRouter = require("./routers/authRouter.js")
 const sportsRouter = require("./routers/sportsRouter.js")
 const coachRouter = require("./routers/coachRouter.js")
 const sportmanRouter = require("./routers/sportmanRouter.js")
+const commentsRouter = require("./routers/commentsRouter.js")
 
 app.use('/', autRouter);
 app.use('/sports/', sportsRouter);
 app.use('/coachlist/', coachRouter);
 app.use('/sportman/', sportmanRouter);
+app.use('/comments/', commentsRouter);
 
 app.listen(3000);

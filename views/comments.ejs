@@ -35,26 +35,22 @@
     <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Név</th>
-            <th scope="col">Kor</th>
-            <th scope="col">Magasság</th>
-            <th scope="col">Testsúly</th>
-            <th scope="col">Sportág</th>
+            <th scope="col">Edző</th>
+            <th scope="col">Értékelés</th>
+            <th scope="col">Pontszám (Átlagosan <%= avg %>)</th>
             <th scope="col">Törlés</th>
           </tr>
         </thead>
         <tbody>
-            <% for(var i=0; i<sportMan.length; i++) {%>
+            <% for(var i=0; i<comments.length; i++) {%>
                 <tr>
-                    <td><%= sportMan[i].sportManName %></td>
-                    <td><%= sportMan[i].age%></td>   
-                    <td><%= sportMan[i].height %></td> 
-                    <td><%= sportMan[i].weight_ %></td>
-                    <td><%= sportMan[i].name_ %></td>
+                    <td><%= comments[i].coachName %></td>
+                    <td><%= comments[i].text_ %></td>   
+                    <td><%= comments[i].points_ %></td> 
         
                     <td>
-                    <form action="/sportman/delete" method="POST">
-                        <input type="hidden" id="id" name="id" value=<%= sportMan[i].ID %>>
+                    <form action="/comments/delete" method="POST">
+                        <input type="hidden" id="id" name="id" value=<%= comments[i].commentID %>>
                         <button type="submit" class="btn btn-danger">Törlés</button>
                     </form>
                     </td>
@@ -66,43 +62,50 @@
       <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
       <div class="leftside">
-        <form action="/sportman/add" method="POST" style="max-width: 25%;border: 1px solid black;">
-          <h2>Sportoló hozzá adása</h2>
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Név</label>
-            <input type="text" class="form-control" name="name" id="name" style="max-width: 50%;" required>
-          </div>
+        <form action="/comments/add" method="POST" style="max-width: 25%;border: 1px solid black;">
+          <h2>Komment hozzá adása</h2>
+            <div class="form-group">
+                <label for="formGroupExampleInput2" style="max-width: 50%;"> Értékelés</label>
+                <input type="text" class="form-control" name="text" id="text" style="max-width: 50%;" required>
+            </div>
 
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Kor</label>
-            <input type="number" class="form-control" name="age" id="age" style="max-width: 50%;" required>
-          </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2" style="max-width: 50%;"> Pontszám</label>
+                <input type="number" min="1" max="10" class="form-control" name="point" id="point" style="max-width: 50%;" required>
+            </div>
 
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Magasság</label>
-            <input type="number" class="form-control" name="height" id="height" style="max-width: 50%;" required>
-          </div>
-
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Testsúly</label>
-            <input type="number" class="form-control" name="weight" id="weight" style="max-width: 50%;" required>
-          </div>
-
-          <div class="form-group">
-            <label for="formGroupExampleInput2" style="max-width: 50%;"> Sportág</label>
-            <select name="type" id="type" required>
-              <% for(var i=0; i<sports.length; i++) {%>
-                <option value=<%= sports[i].id %> selected><%= sports[i].name_ %></option>
-              <% } %>
-            </select>
-          </div>
-  
-          <div class="form-group">
-            <td><button type="submit" class="btn btn-success">Hozzáadás</button></td>
-            </select>
-          </div>
-        </form>
+            <div class="form-group">
+                <select name="coach" id="coach" required>
+                    <% for(var i=0; i<coach.length; i++) {%>
+                    <option value=<%= coach[i].coachID%> selected><%= coach[i].coachName%></option>
+                    <% } %>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <td><button type="submit" class="btn btn-success">Hozzáadás</button></td>
+                </select>
+            </div>
+            </form>
       </div>
+
+      <h2>Jó véleményezések</h2>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Edző</th>
+            <th scope="col">Értékelés</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0; i<goodComents.length; i++) {%>
+                <tr>
+                    <td><%= goodComents[i].coachName %></td>
+                    <td><%= goodComents[i].text_ %></td>   
+                </tr>
+            <% } %>
+        </tbody>
+      </table>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

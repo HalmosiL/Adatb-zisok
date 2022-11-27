@@ -13,7 +13,24 @@ async function getAllSports() {
 
         return data
     } catch (err) {
-        throw err
+         
+    }
+}
+
+async function getSportsCounts() {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("select count(SportsMan.ID) as count, Sports.name_ from Sports inner join SportsMan on Sports.ID=SportsMan.type_ group by Sports.name_;")
+
+        conn.destroy()
+
+        if(data === undefined) {
+            return []
+        }
+
+        return data
+    } catch (err) {
+         
     }
 }
 
@@ -25,21 +42,25 @@ async function deleteByID(id) {
 
         conn.destroy()
     } catch (err) {
-        throw err
+         
     }
 }
 
-function updateElement(id, type, name, difficulty, coach) {
-    for(var i=0; i<Sports.length; i++) {
-        if(Sports[i].id == id){
-            Sports[i] = {
-                id: id,
-                type: type,
-                name: name,
-                difficulty: difficulty,
-                coach: coach
-            }
-        }
+async function updateElement(id, type, name, difficulty, coach_id) {
+    try {
+        conn = await pool.getConnection();
+        data = await conn.query("UPDATE Sports SET Sports.type_ = ?, Sports.name_ = ?, Sports.difficulty = ?, Sports.coachID = ?  WHERE Sports.ID = ?;",
+            [
+                type,
+                name,
+                difficulty,
+                coach_id,
+                id
+            ]   
+        )
+        conn.destroy()
+    } catch (err) {
+         
     }
 }
 
@@ -56,7 +77,7 @@ async function addElement(type, name, difficulty, coach_id) {
         )
         conn.destroy()
     } catch (err) {
-        throw err
+         
     }
 }
 
@@ -76,7 +97,7 @@ async function getSportsByType(type) {
 
         return data
     } catch (err) {
-        throw err
+         
     }
 }
 
@@ -98,7 +119,7 @@ async function getSportsByName(name){
 
         return data
     } catch (err) {
-        throw err
+         
     }
 }
 
@@ -118,7 +139,7 @@ async function getSportsByDificulty(difficulty) {
 
         return data
     } catch (err) {
-        throw err
+         
     }
 }
 
@@ -138,9 +159,9 @@ async function getSportsByCoach(coachID) {
 
         return data
     } catch (err) {
-        throw err
+         
     }
 }
 
 
-module.exports = {getAllSports, deleteByID, addElement, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach, updateElement}
+module.exports = {getAllSports, deleteByID, addElement, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach, updateElement, getSportsCounts}

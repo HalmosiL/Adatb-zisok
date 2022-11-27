@@ -1,6 +1,6 @@
 const express = require('express')
-const {getAllSports, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach} = require('../services/sportService.js')
-const {getAllCoaches} = require('../services/coachService.js')
+const {getAllSports, getSportsByDificulty, getSportsByName, getSportsByType, getSportsByCoach, getSportsCounts} = require('../services/sportService.js')
+const {getAllCoachV} = require('../services/coachService.js')
 
 const {checkSignIn} = require('../auth.js')
 const {createUser, login, getUser} = require('../services/userService.js')
@@ -36,7 +36,7 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/', checkSignIn, async (req, res) => {
-    res.render('index', {sports: await getAllSports(), coach: await getAllCoaches()})
+    res.render('index', {sports: await getAllSports(), coach: await getAllCoachV(), count: await getSportsCounts()})
 })
 
 router.get('/type', checkSignIn, (req, res) => {

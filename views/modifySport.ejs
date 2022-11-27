@@ -16,6 +16,12 @@
         <li class="nav-item active">
           <a class="navbar-brand" href="/coachlist">Edzők</a>
         </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/sportman">Sportolók</a>
+        </li>
+        <li class="nav-item active">
+          <a class="navbar-brand" href="/comments">Edzők Értékelése</a>
+        </li>
       </ul>
 
       <form class="form-inline" action="/logout">
@@ -57,7 +63,7 @@
               <label for="formGroupExampleInput2"> Edző</label>
               <select name="coach" id="coach" required>
                 <% for(var i=0; i<coach.length; i++) {%>
-                    <option value=<%= coach[i].ID%> selected><%= coach[i].name%></option>
+                    <option value=<%= coach[i].coachID%> selected><%= coach[i].coachName%></option>
                 <% } %>
               </select>
             </div>

@@ -22,8 +22,8 @@ router.post('/delete', checkSignIn, (req, res) => {
     res.redirect('/')
 })
 
-router.post('/update', checkSignIn, (req, res) => {
-    res.render('modifySport', {coach: getAllCoaches(), id: req.body.id})
+router.post('/update', checkSignIn, async (req, res) => {
+    res.render('modifySport', {coach: await getAllCoaches(), id: req.body.id})
 })
 
 router.post('/updateValues', checkSignIn, (req, res) => {
